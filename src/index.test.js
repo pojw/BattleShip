@@ -15,4 +15,5 @@ describe("Ship functins", () => {
   it("name of ship", () => {
     expect(Carrier.length).toBe(5);
   });
+  it("hit");
 });
