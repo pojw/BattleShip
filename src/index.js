@@ -7,7 +7,7 @@ export function read() {
 
 export class ship {
   constructor(id, length, hit, sunk) {
-    (this.id = id), (this.length = length.fun);
+    (this.id = id), (this.length = length);
     (this.hit = hit), (this.sunk = sunk);
   }
   length() {
