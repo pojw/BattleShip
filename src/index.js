@@ -6,17 +6,31 @@ export function read() {
 }
 
 export class ship {
-  constructor(id, length, hitActin,hits, sunk) {
+  constructor(id, length, hitActin, sunk) {
     (this.id = id), (this.length = length);
-    (this.hitActin = hitActin), (this.sunk = sunk),    this.hits=[]
-;
-    }
-    this.hits =for (let i = 0; i < this.length;i++){this.hits}
-  length() {
+    (this.hitActin = hitActin),
+      (this.sunk = sunk),
+      (this.hits = new Array(this.length).fill(null));
+  }
+
+  lengths() {
     return this.length;
-    },
-    hit() {
-      
+  }
+
+  gotHit(index) {
+    this.hits[index] = "hit";
+    return this.hits;
+  }
+
+  sunkChecking() {
+    for (let i = 0; i < this.length; i++) {
+      if (this.hits[i] == "hit") {
+        continue;
+      } else {
+        return false;
+      }
+    }
+    return true;
   }
 }
 let shipTypes = { Carrier: 4, battleship: 4 };
