@@ -6,10 +6,10 @@ export function read() {
 }
 
 export class ship {
-  constructor(id, length, hitActin, sunk) {
+  constructor(id, length, orintation) {
     (this.id = id), (this.length = length);
-    (this.hitActin = hitActin),
-      (this.sunk = sunk),
+
+    (this.orintation = orintation),
       (this.hits = new Array(this.length).fill(null));
   }
 
@@ -31,6 +31,13 @@ export class ship {
       }
     }
     return true;
+  }
+  changeOrintation() {
+    if (this.orintation == "hori") {
+      this.orintation = "vert";
+    } else {
+      this.orintation = "hori";
+    }
   }
 }
 let shipTypes = { Carrier: 4, battleship: 4 };

@@ -10,7 +10,7 @@ test("second", () => {
 describe("Ship functins", () => {
   let Carrier;
   beforeEach(() => {
-    Carrier = new ship("Carreir", 5);
+    Carrier = new ship("Carreir", 5, "hori");
   });
   it("name of ship", () => {
     expect(Carrier.lengths()).toBe(5);
@@ -32,5 +32,10 @@ describe("Ship functins", () => {
     Carrier.gotHit(4);
 
     expect(Carrier.sunkChecking()).toBe(true);
+  });
+  it("Orintation change", () => {
+    expect(Carrier.orintation).toBe("hori");
+    Carrier.changeOrintation();
+    expect(Carrier.orintation).toBe("vert");
   });
 });
