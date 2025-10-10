@@ -6,13 +6,36 @@ export function read() {
 }
 
 export class ship {
-  constructor(id, length, hit, sunk) {
-    (this.id = id), (this.length = length.fun);
-    (this.hit = hit), (this.sunk = sunk);
+  constructor(id, length, hitActin, sunk) {
+    (this.id = id), (this.length = length);
+    (this.hitActin = hitActin),
+      (this.sunk = sunk),
+      (this.hits = new Array(this.length).fill(null));
   }
-  length() {
+
+  lengths() {
     return this.length;
+  }
+
+  gotHit(index) {
+    this.hits[index] = "hit";
+    return this.hits;
+  }
+
+  sunkChecking() {
+    for (let i = 0; i < this.length; i++) {
+      if (this.hits[i] == "hit") {
+        continue;
+      } else {
+        return false;
+      }
+    }
+    return true;
   }
 }
 let shipTypes = { Carrier: 4, battleship: 4 };
 let testing = new ship("fsafd");
+//basically need a ship funcitn with the abilyt to know the oritnaition,
+//lenght, orintation, one of poisiton hit, how many hit, and if sunk
+//hit idea, proably have an area of it and start with null,
+//  then replace with hit an dthe array index.
