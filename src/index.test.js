@@ -12,7 +12,7 @@ describe("Ship functins", () => {
   beforeEach(() => {
     Carrier = new ship("Carreir", 5);
   });
-  it("name of ship", () => {
+  it("Name of ship", () => {
     expect(Carrier.length).toBe(5);
   });
 });
