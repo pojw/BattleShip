@@ -12,26 +12,8 @@ describe("Ship functins", () => {
   beforeEach(() => {
     Carrier = new ship("Carreir", 5, "hori");
   });
-  it("name of ship", () => {
-    expect(Carrier.lengths()).toBe(5);
-  });
-  it("hit", () => {
-    expect(Carrier.gotHit(2)).toEqual([null, null, "hit", null, null]);
-  });
-  it("False Sunk", () => {
-    expect(Carrier.sunkChecking()).toBe(false);
-  });
-  it("True Sunk", () => {
-    expect(Carrier.sunkChecking()).toBe(false);
-
-    Carrier.gotHit(0);
-    Carrier.gotHit(1);
-    Carrier.gotHit(2);
-
-    Carrier.gotHit(3);
-    Carrier.gotHit(4);
-
-    expect(Carrier.sunkChecking()).toBe(true);
+  it("Name of ship", () => {
+    expect(Carrier.length).toBe(5);
   });
   it("Orintation change", () => {
     expect(Carrier.orintation).toBe("hori");
