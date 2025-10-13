@@ -2,6 +2,7 @@ export class GameBoard {
   constructor() {
     this.board = [];
     this.ships = [];
+    this.cantPlace = new Set();
   }
 
   createBoard() {
@@ -10,16 +11,39 @@ export class GameBoard {
     }
     return this.board;
   }
+  checkPlace(name, start) {
+    if (name.orintation == "hori") {
+      for (let i = start[0]; i < 5 + start[0]; i++) {
+        if (this.cantPlace.has(JSON.stringify([i, start[1]]))) {
+          return false;
+        }
+      }
+    } else {
+      for (let i = start[1]; i < 5 + start[1]; i++) {
+        if (this.cantPlace.has(JSON.stringify([start[0], i]))) {
+          return false;
+        }
+      }
+      return true;
+    }
+    return true;
+  }
   placeShip(name, start) {
+    if (!this.checkPlace(name, start)) {
+      return "Already Placed";
+    }
     let hit = 0;
     if (name.orintation == "hori") {
       if (start[0] + name.length >= 10) return "Out of bounce on X-axis";
       for (let i = start[0]; i < 5 + start[0]; i++) {
         this.board[start[1]][i] = "ship";
         name.hits[hit] = [i, start[1]];
+        name.space([i, start[1]]);
+
         hit += 1;
       }
       this.ships.push(name);
+      this.addNozone(name.noZone);
 
       return this.board[start[1]];
     } else {
@@ -27,10 +51,18 @@ export class GameBoard {
       for (let i = start[1]; i < 5 + start[1]; i++) {
         this.board[i][start[0]] = "ship";
         name.hits[hit] = [start[0], i];
+        name.space([i, start[1]]);
+
         hit += 1;
       }
       this.ships.push(name);
+      this.addNozone(name.noZone);
       return this.board;
+    }
+  }
+  addNozone(points) {
+    for (let point of points) {
+      this.cantPlace.add(point);
     }
   }
   reivceAttack(point) {
@@ -55,10 +87,16 @@ export class GameBoard {
     if (this.board[point[1]][point[0]] == "miss") return "Already Missed";
     return false;
   }
+  sunkAllCheck() {
+    for (let i of this.ships) {
+      console.log(i);
+      if (!i.sunkChecking()) {
+        return false;
+      }
+    }
+    return "All Sunked";
+  }
 }
 
-//now I have to add a feature to ensure ships dont overlap, and are also not in the zone of each other, so this can be done by
-//  a list of ship cornditans that if equal then cant place there
-//the only negative of this if they remove it, then well i could just remove entry from list , i could also just have the acutal
-//  ship have no otuching zone whihc is the length o fit but also the surrounding
-//so when removed, loops thorugh array and removes it
+//next feature is the players and havng the proper identificaiotn towards them,
+//after creating players calss, I wil create the UI for it

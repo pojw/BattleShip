@@ -215,4 +215,24 @@ describe("Gameboard Functions", () => {
     board.reivceAttack([0, 0]);
     expect(board.reivceAttack([0, 0])).toEqual("Already Missed");
   });
+  it("Cant overlap", () => {
+    board.placeShip(Carrier, [0, 0]);
+    expect(board.placeShip(Carrier, [0, 0])).toEqual("Already Placed");
+  });
+  it("Check if all sunked", () => {
+    board.placeShip(Carrier, [0, 0]);
+    board.reivceAttack([0, 0]);
+    board.reivceAttack([1, 0]);
+    board.reivceAttack([2, 0]);
+    board.reivceAttack([3, 0]);
+    board.reivceAttack([4, 0]);
+    Large = new ship("Large", 5, "hori");
+    board.placeShip(Large, [0, 2]);
+    board.reivceAttack([0, 2]);
+    board.reivceAttack([1, 2]);
+    board.reivceAttack([2, 2]);
+    board.reivceAttack([3, 2]);
+    board.reivceAttack([4, 2]);
+    expect(board.sunkAllCheck()).toEqual("All Sunked");
+  });
 });

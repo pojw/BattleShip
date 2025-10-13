@@ -11,14 +11,17 @@ export class ship {
 
     (this.orintation = orintation),
       (this.hits = new Array(this.length).fill(null));
+    this.noZone = new Set();
   }
 
   lengths() {
     return this.length;
   }
+  space(point) {
+    this.noZone.add(JSON.stringify(point));
+  }
 
   gotHit(point) {
-    console.log(this.hits);
     for (let i = 0; i < this.hits.length; i++) {
       if (point[0] == this.hits[i][0] && point[1] == this.hits[i][1]) {
         this.hits.splice(i, 1);
