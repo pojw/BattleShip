@@ -17,20 +17,22 @@ export class ship {
     return this.length;
   }
 
-  gotHit(index) {
-    this.hits[index] = "hit";
-    return this.hits;
+  gotHit(point) {
+    console.log(this.hits);
+    for (let i = 0; i < this.hits.length; i++) {
+      if (point[0] == this.hits[i][0] && point[1] == this.hits[i][1]) {
+        this.hits.splice(i, 1);
+      }
+    }
+    if (this.sunkChecking()) {
+      return "Sunked";
+    }
   }
 
   sunkChecking() {
-    for (let i = 0; i < this.length; i++) {
-      if (this.hits[i] == "hit") {
-        continue;
-      } else {
-        return false;
-      }
-    }
-    return true;
+    if (this.hits.length == 0) {
+      return true;
+    } else return false;
   }
   changeOrintation() {
     if (this.orintation == "hori") {

@@ -189,8 +189,30 @@ describe("Gameboard Functions", () => {
 
     expect(board.placeShip(Carrier, [0, 5])).toEqual("Out of bounce on Y-axis");
   });
-  it("Rieice attack", () => {
+  it("First attack", () => {
     board.placeShip(Carrier, [0, 0]);
-    expect(board.reivceAttack([0, 4])).toEqual(true);
+    expect(board.reivceAttack([3, 0])).toEqual("Hit");
+  });
+  it("Sunk Horizaton", () => {
+    board.placeShip(Carrier, [0, 0]);
+    board.reivceAttack([0, 0]);
+    board.reivceAttack([1, 0]);
+    board.reivceAttack([2, 0]);
+    board.reivceAttack([3, 0]);
+    expect(board.reivceAttack([4, 0])).toEqual("Sunked");
+  });
+  it("Sunk Vertifical", () => {
+    Carrier.changeOrintation();
+    board.placeShip(Carrier, [0, 0]);
+    board.reivceAttack([0, 0]);
+
+    board.reivceAttack([0, 1]);
+    board.reivceAttack([0, 2]);
+    board.reivceAttack([0, 3]);
+    expect(board.reivceAttack([0, 4])).toEqual("Sunked");
+  });
+  it("Hitting twice", () => {
+    board.reivceAttack([0, 0]);
+    expect(board.reivceAttack([0, 0])).toEqual("Already Missed");
   });
 });
