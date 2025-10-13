@@ -181,4 +181,16 @@ describe("Gameboard Functions", () => {
       ],
     ]);
   });
+  it("Out of bounce on x axis", () => {
+    expect(board.placeShip(Carrier, [5, 9])).toEqual("Out of bounce on X-axis");
+  });
+  it("Out of bounce on y axis", () => {
+    Carrier.changeOrintation();
+
+    expect(board.placeShip(Carrier, [0, 5])).toEqual("Out of bounce on Y-axis");
+  });
+  it("Rieice attack", () => {
+    board.placeShip(Carrier, [0, 0]);
+    expect(board.reivceAttack([0, 4])).toEqual(true);
+  });
 });
