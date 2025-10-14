@@ -1,53 +1,54 @@
-export function fun() {
-  return 2;
-}
-export function read() {
-  return 3;
-}
+import { GameBoard } from "./Gameboard";
+import { Player } from "./player";
+import { ship } from "./ship";
+import "./styles.css";
 
-export class ship {
-  constructor(id, length, orintation) {
-    (this.id = id), (this.length = length);
-
-    (this.orintation = orintation),
-      (this.hits = new Array(this.length).fill(null));
-    this.noZone = new Set();
+class controller {
+  constructor() {
+    this.content = document.getElementById("content");
+    this.player1 = new Player("Human");
+    this.player2 = new Player("Robot");
+    this.GameBoard("player1");
+    this.GameBoard("player2");
+    this.placeShipsRandomly();
   }
 
-  lengths() {
-    return this.length;
-  }
-  space(point) {
-    this.noZone.add(JSON.stringify(point));
-  }
+  GameBoard(currentPlayer) {
+    console.log(this.player1.gameboard);
+    let gameboard = document.getElementById(currentPlayer);
+    gameboard.textContent = "";
+    for (let i in this[currentPlayer].gameboard.board) {
+      for (let j in this[currentPlayer].gameboard.board[i]) {
+        let div = document.createElement("Button");
+        let info = this[currentPlayer].gameboard.board[i][j];
+        console.log(this[currentPlayer].gameboard.board[i][j]);
 
-  gotHit(point) {
-    for (let i = 0; i < this.hits.length; i++) {
-      if (point[0] == this.hits[i][0] && point[1] == this.hits[i][1]) {
-        this.hits.splice(i, 1);
+        div.textContent = info;
+        if (info == "hit") {
+          div.classList.add("hitShip");
+        }
+        if (info == "miss") {
+          div.classList.add("miss");
+        }
+        div.addEventListener("click", () => {
+          this[currentPlayer].gameboard.reivceAttack([j, i]);
+          console.log(this[currentPlayer].gameboard.board);
+          this.GameBoard(currentPlayer);
+        });
+
+        div.classList.add("cell");
+        gameboard.appendChild(div);
       }
     }
-    if (this.sunkChecking()) {
-      return "Sunked";
-    }
   }
-
-  sunkChecking() {
-    if (this.hits.length == 0) {
-      return true;
-    } else return false;
-  }
-  changeOrintation() {
-    if (this.orintation == "hori") {
-      this.orintation = "vert";
-    } else {
-      this.orintation = "hori";
-    }
+  placeShipsRandomly() {
+    this.player1.gameboard.placeShip(this.player1.ships[0], [0, 0]);
+    this.player1.gameboard.placeShip(this.player1.ships[1], [2, 2]);
+    this.player1.gameboard.placeShip(this.player1.ships[2], [5, 5]);
+    this.player1.gameboard.placeShip(this.player1.ships[3], [6, 6]);
+    this.player1.gameboard.placeShip(this.player1.ships[4], [7, 3]);
+    console.log(this.player1.gameboard);
+    this.GameBoard("player1");
   }
 }
-let shipTypes = { Carrier: 4, battleship: 4 };
-let testing = new ship("fsafd");
-//basically need a ship funcitn with the abilyt to know the oritnaition,
-//lenght, orintation, one of poisiton hit, how many hit, and if sunk
-//hit idea, proably have an area of it and start with null,
-//  then replace with hit an dthe array index.
+let game = new controller();

@@ -1,5 +1,5 @@
-import { fun, read } from "./index";
-import { ship } from "./index";
+import { fun, read } from "./ship";
+import { ship } from "./ship";
 test("first function", () => {
   expect(fun()).toBe(2);
 });

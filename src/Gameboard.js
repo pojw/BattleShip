@@ -35,7 +35,7 @@ export class GameBoard {
     let hit = 0;
     if (name.orintation == "hori") {
       if (start[0] + name.length >= 10) return "Out of bounce on X-axis";
-      for (let i = start[0]; i < 5 + start[0]; i++) {
+      for (let i = start[0]; i < name.length + start[0]; i++) {
         this.board[start[1]][i] = "ship";
         name.hits[hit] = [i, start[1]];
         name.space([i, start[1]]);

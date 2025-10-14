@@ -1,6 +1,6 @@
 import { isWebTarget } from "webpack-dev-server";
 import { GameBoard } from "./Gameboard";
-import { ship } from "./index";
+import { ship } from "./ship";
 describe("Gameboard Functions", () => {
   let board;
   beforeEach(() => {

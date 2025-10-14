@@ -1,4 +1,35 @@
 /* styles.css */
 body {
-  background-color: rgb(105, 101, 109);
+  background-color: rgb(68, 14, 122);
+  display: grid;
+  grid-template-columns: 35vw 10vw 35vw;
+  grid-template-rows: 100vh;
+  border: 3px red solid;
+  color: white;
+  justify-content: center;
+  align-items: center;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(10, 1fr);
+  border: 3px rgb(0, 255, 136) solid;
+  aspect-ratio: 1 / 1;
+}
+.cell {
+  background-color: red;
+  width: 1fr;
+  height: 1fr;
+  align-content: center;
+  text-align: center;
+  border: 1px rgb(93, 102, 98) solid;
+  aspect-ratio: 1 / 1;
+}
+
+.hitShip {
+  background-color: black;
+}
+.miss {
+  background-color: yellow;
 }
