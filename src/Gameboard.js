@@ -69,10 +69,15 @@ export class GameBoard {
     //checking if it can change teh carrier feature
 
     if (this.board[point[1]][point[0]] == "ship") {
+      console.log("hit");
       for (let ship of this.ships) {
         for (let j of ship.hits) {
           if (point[0] == j[0] && point[1] == j[1]) {
-            if (ship.gotHit(point) == "Sunked") return "Sunked";
+            if (ship.gotHit(point) == "Sunked") {
+              console.log("sunked");
+              this.board[point[1]][point[0]] = "hit";
+              return "Sunked";
+            }
             this.board[point[1]][point[0]] = "hit";
             return "Hit";
           }

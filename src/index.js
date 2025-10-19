@@ -14,14 +14,12 @@ class controller {
   }
 
   GameBoard(currentPlayer) {
-    console.log(this.player1.gameboard);
     let gameboard = document.getElementById(currentPlayer);
     gameboard.textContent = "";
     for (let i in this[currentPlayer].gameboard.board) {
       for (let j in this[currentPlayer].gameboard.board[i]) {
         let div = document.createElement("Button");
         let info = this[currentPlayer].gameboard.board[i][j];
-        console.log(this[currentPlayer].gameboard.board[i][j]);
 
         div.textContent = info;
         if (info == "hit") {
@@ -32,7 +30,6 @@ class controller {
         }
         div.addEventListener("click", () => {
           this[currentPlayer].gameboard.reivceAttack([j, i]);
-          console.log(this[currentPlayer].gameboard.board);
           this.GameBoard(currentPlayer);
         });
 
@@ -52,3 +49,6 @@ class controller {
   }
 }
 let game = new controller();
+//next thing would be to add the logci, where player 1 and 2 take turns in goign,
+// if hit then go again, and after every move check if player.other board .sunked all
+//
