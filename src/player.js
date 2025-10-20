@@ -5,7 +5,7 @@ export class Player {
     this.player = player;
     this.gameboard = new GameBoard();
     this.gameboard.createBoard();
-
+    this.turn = false;
     this.ships = [
       new ship("Carrier", 5, "hori"),
       new ship("Battleship", 4, "hori"),

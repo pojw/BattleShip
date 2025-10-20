@@ -103,5 +103,11 @@ export class GameBoard {
   }
 }
 
-//next feature is the players and havng the proper identificaiotn towards them,
-//after creating players calss, I wil create the UI for it
+//next feature is to create a bank of ships and above it ot show the shis able to place,
+//then after that , get the restart and middl ebuttons to work,
+//    add a restart, win player 1 win player 2, AI player,
+//    those will be buttons for now, just to git the ui to almost finished
+// next feature will be to not display the board if it not your turn,
+//    idea, have player one render theres, player two have it all be blank
+//    once you hit and switch turns, then have player 1 blank and show player 2 ships
+//

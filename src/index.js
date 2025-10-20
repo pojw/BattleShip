@@ -8,6 +8,7 @@ class controller {
     this.content = document.getElementById("content");
     this.player1 = new Player("Human");
     this.player2 = new Player("Robot");
+    this.player1.turn = true;
     this.GameBoard("player1");
     this.GameBoard("player2");
     this.placeShipsRandomly();
@@ -29,13 +30,35 @@ class controller {
           div.classList.add("miss");
         }
         div.addEventListener("click", () => {
-          this[currentPlayer].gameboard.reivceAttack([j, i]);
-          this.GameBoard(currentPlayer);
+          if (info == "blank" || info == "ship") {
+            if (this[currentPlayer].turn) {
+              let status = this[currentPlayer].gameboard.reivceAttack([j, i]);
+              this.GameBoard(currentPlayer);
+              if (status == "Hit" || status == "Sunked") {
+              } else {
+                this.switchTurns();
+              }
+              if (
+                this[currentPlayer].gameboard.sunkAllCheck() == "All Sunked"
+              ) {
+                alert("all sunked");
+              }
+            }
+          }
         });
 
         div.classList.add("cell");
         gameboard.appendChild(div);
       }
+    }
+  }
+  switchTurns() {
+    if (this.player1.turn) {
+      this.player1.turn = false;
+      this.player2.turn = true;
+    } else {
+      this.player1.turn = true;
+      this.player2.turn = false;
     }
   }
   placeShipsRandomly() {
