@@ -13,6 +13,7 @@ export class Player {
       new ship("Submarine", 3, "hori"),
       new ship("Destroyer", 2, "hori"),
     ];
+    this.wins = 0;
   }
 }
 

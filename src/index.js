@@ -5,13 +5,7 @@ import "./styles.css";
 
 class controller {
   constructor() {
-    this.content = document.getElementById("content");
-    this.player1 = new Player("Human");
-    this.player2 = new Player("Robot");
-    this.player1.turn = true;
-    this.GameBoard("player1");
-    this.GameBoard("player2");
-    this.placeShipsRandomly();
+    this.startGame();
   }
 
   GameBoard(currentPlayer) {
@@ -52,6 +46,37 @@ class controller {
       }
     }
   }
+  startGame() {
+    this.content = document.getElementById("content");
+    this.player1 = new Player("Player 1");
+    this.player2 = new Player("Player 2");
+    this.player1.turn = true;
+    this.GameBoard("player1");
+    this.GameBoard("player2");
+    this.placeShipsRandomly();
+    this.shipLocation("player1");
+    this.shipLocation("player2");
+    this.settings();
+  }
+  shipLocation(player) {
+    let area = document.getElementById(player + "Ships");
+    area.textContent = "";
+    for (let i of this[player].ships) {
+      area.textContent += " " + i.id;
+    }
+  }
+  settings() {
+    let area = document.getElementById("settings");
+    area.textContent = `${this.player1.player} Wins: ${this.player1.wins}
+   \n${this.player2.player} Wins: ${this.player2.wins}
+   \n `;
+    let button = document.createElement("button");
+    button.addEventListener("click", () => {
+      alert("hey");
+    });
+    button.textContent = "Restart";
+    area.appendChild(button);
+  }
   switchTurns() {
     if (this.player1.turn) {
       this.player1.turn = false;
@@ -72,6 +97,3 @@ class controller {
   }
 }
 let game = new controller();
-//next thing would be to add the logci, where player 1 and 2 take turns in goign,
-// if hit then go again, and after every move check if player.other board .sunked all
-//

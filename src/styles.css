@@ -8,12 +8,13 @@ body {
   color: white;
   justify-content: center;
   align-items: center;
+  white-space: pre-line;
 }
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(10, 1fr);
-  grid-template-rows: repeat(10, 1fr);
+  grid-template-columns: repeat(10, 10%);
+  grid-template-rows: repeat(10, 10%);
   border: 3px rgb(0, 255, 136) solid;
   aspect-ratio: 1 / 1;
 }
@@ -32,4 +33,26 @@ body {
 }
 .miss {
   background-color: yellow;
+}
+#player1Ships,
+#player2Ships {
+  border: 2px black solid;
+  height: 10vh;
+}
+
+#player1Side,
+#player2Side {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  border: 2px rgb(175, 243, 17) solid;
+  height: 100%;
+}
+#settings {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  border: 2px green solid;
+  height: 100%;
 }
