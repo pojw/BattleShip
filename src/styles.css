@@ -34,12 +34,34 @@ body {
 .miss {
   background-color: yellow;
 }
+.highlight {
+  background-color: yellow;
+}
 #player1Ships,
 #player2Ships {
   border: 2px black solid;
   height: 10vh;
+  display: flex;
 }
-
+.hidden {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+.show {
+  display: block;
+}
+.text {
+  color: red;
+}
+.buttonShips {
+  width: 40px;
+  border: red 2px solid;
+  height: 40px;
+}
 #player1Side,
 #player2Side {
   display: flex;

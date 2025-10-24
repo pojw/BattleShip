@@ -14,6 +14,8 @@ export class Player {
       new ship("Destroyer", 2, "hori"),
     ];
     this.wins = 0;
+    this.currentShip = "";
+    this.placeShips = [];
   }
 }
 

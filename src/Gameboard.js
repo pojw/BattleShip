@@ -30,12 +30,17 @@ export class GameBoard {
     return true;
   }
   placeShip(name, start) {
+    start[0] = parseInt(start[0]);
+    start[1] = parseInt(start[1]);
+
     if (!this.checkPlace(name, start)) {
       return "Already Placed";
     }
     let hit = 0;
     if (name.orintation == "hori") {
-      if (start[0] + name.length >= 10) return "Out of bounce on X-axis";
+      console.log(start[0], start[1], name.length);
+      console.log(start[0] + name.length);
+      if (start[0] + name.length > 10) return "Out of bounce on X-axis";
       for (let i = start[0]; i < name.length + start[0]; i++) {
         this.board[start[1]][i] = "ship";
         name.hits[hit] = [i, start[1]];
@@ -48,7 +53,7 @@ export class GameBoard {
 
       return this.board[start[1]];
     } else {
-      if (start[1] + name.length >= 10) return "Out of bounce on Y-axis";
+      if (start[1] + name.length > 10) return "Out of bounce on Y-axis";
       for (let i = start[1]; i < 5 + start[1]; i++) {
         this.board[i][start[0]] = "ship";
         name.hits[hit] = [start[0], i];

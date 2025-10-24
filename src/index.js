@@ -85,17 +85,36 @@ class controller {
     this.player1.turn = true;
     this.shipLocation("player1");
     this.shipLocation("player2");
-    this.placeShipsRandomly();
+    this.newBoard("player1");
+    // this.placeShipsRandomly();
 
-    this.GameBoard("player1");
+    // this.GameBoard("player1");
 
     this.settings();
+  }
+  showItems(player) {
+    let items = document.getElementById(player + "ShipsShowing");
+    items.classList.add("show");
+  }
+  hideItems(player) {
+    let items = document.getElementById(player + "ShipsShowing");
+    items.classList.remove("show");
   }
   shipLocation(player) {
     let area = document.getElementById(player + "Ships");
     area.textContent = "";
+
     for (let i of this[player].ships) {
-      area.textContent += " " + i.id;
+      if (!this[player].placeShips.includes(i)) {
+        let element = document.createElement("button");
+        element.textContent = i.id;
+        element.classList.add("text");
+        element.addEventListener("click", () => {
+          this[player].currentShip = i;
+          this[player].placeShips.push(i);
+        });
+        area.appendChild(element);
+      }
     }
   }
   settings() {
@@ -139,6 +158,58 @@ class controller {
     this.player2.gameboard.placeShip(this.player2.ships[4], [7, 3]);
     console.log(this.player1.gameboard);
   }
+  highlight(id) {
+    let box = document.getElementById(id);
+
+    box.classList.add("highlight");
+  }
+  removeHighlight(id) {
+    let box = document.getElementById(id);
+
+    box.classList.remove("highlight");
+  }
+  newBoard(player) {
+    let gameboard = document.getElementById(player);
+    gameboard.textContent = "";
+    for (let i in this[player].gameboard.board) {
+      for (let j in this[player].gameboard.board[i]) {
+        let div = document.createElement("Button");
+        div.classList.add("cell");
+        let info = this[player].gameboard.board[i][j];
+
+        if (info == "ship") {
+          div.textContent = info;
+          gameboard.appendChild(div);
+        } else {
+          let location = `${i + j + player}`;
+
+          div.id = location;
+          div.addEventListener("mouseover", () => {
+            this.highlight(location);
+          });
+          div.addEventListener("mouseout", () => {
+            this.removeHighlight(location);
+          });
+          div.addEventListener("click", () => {
+            let valid = this[player].gameboard.placeShip(
+              this[player].currentShip,
+              [j, i]
+            );
+            if (
+              valid == "Out of bounce on Y-axis" ||
+              valid == "Out of bounce on X-axis"
+            ) {
+              alert("Out of bounce on Y-axis");
+            } else {
+              this.newBoard(player);
+              this.shipLocation(player);
+            }
+          });
+          gameboard.appendChild(div);
+        }
+      }
+    }
+  }
   reset() {
     this.content = document.getElementById("content");
     this.player1.gameboard.createBoard();
@@ -154,8 +225,12 @@ class controller {
 }
 let game = new controller();
 
-//make it so once your turn, your stuff is visbale and oppenat side blank
 //create a form , maybe dropdonw
+//click and place
+// so have bank list of buttons with values of ships, and have it palce and then update both ship info and board
+//add a hover for the gird,
+//this grid will be different since not taking input, you will be placing ships
+
 //so dropdown will show list of names, and cordinate you want it to start, and vertical or horizitaln,
 //you will use these to plug into player1.gameboard.placeship, and if returns good then remove ship from list,
 //same thing for right side
