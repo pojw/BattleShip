@@ -24,21 +24,24 @@ class controller {
 
         let div = document.createElement("Button");
 
-        div.textContent = info;
         if (info == "hit") {
+          div.textContent = info;
+
           div.classList.add("hitShip");
         }
         if (info == "miss") {
+          div.textContent = info;
+
           div.classList.add("miss");
         }
         div.addEventListener("click", () => {
           if (info == "blank" || info == "ship") {
-            if (this[otherplayer].turn) {
+            if (this[currentPlayer].turn) {
               let status = this[otherplayer].gameboard.reivceAttack([j, i]);
-              this.GameBoard(otherplayer);
+              this.GameBoard(currentPlayer);
               if (status == "Hit" || status == "Sunked") {
               } else {
-                this.switchTurns(otherplayer);
+                this.switchTurns(currentPlayer);
               }
               if (this[otherplayer].gameboard.sunkAllCheck() == "All Sunked") {
                 alert("all sunked");
@@ -59,6 +62,18 @@ class controller {
       for (let j in this[currentPlayer].gameboard.board[i]) {
         let div = document.createElement("Button");
         div.classList.add("cell");
+        let info = this[currentPlayer].gameboard.board[i][j];
+        if (info == "ship") {
+          div.textContent = info;
+        }
+        if (info == "hit") {
+          div.classList.add("hitShip");
+          div.textContent = info;
+        }
+        if (info == "miss") {
+          div.classList.add("miss");
+          div.textContent = info;
+        }
         gameboard2.appendChild(div);
       }
     }
@@ -67,11 +82,13 @@ class controller {
     this.content = document.getElementById("content");
     this.player1 = new Player("Player 1");
     this.player2 = new Player("Player 2");
-    this.player2.turn = true;
-    this.GameBoard("player2");
-    this.placeShipsRandomly();
+    this.player1.turn = true;
     this.shipLocation("player1");
     this.shipLocation("player2");
+    this.placeShipsRandomly();
+
+    this.GameBoard("player1");
+
     this.settings();
   }
   shipLocation(player) {
@@ -96,15 +113,19 @@ class controller {
   switchTurns(currentPlayer) {
     this[currentPlayer].turn = false;
 
-    if (currentPlayer == "player1") {
-      this.player2.turn = true;
+    setTimeout(() => {
+      //eventlauyyy come back and set a blcoking screen saying is other player ready
+      if (currentPlayer == "player1") {
+        this.player2.turn = true;
 
-      this.GameBoard("player2");
-    } else {
-      this.player1.turn = true;
-      this.GameBoard("player1");
-    }
+        this.GameBoard("player2");
+      } else {
+        this.player1.turn = true;
+        this.GameBoard("player1");
+      }
+    }, 1000);
   }
+
   placeShipsRandomly() {
     this.player1.gameboard.placeShip(this.player1.ships[0], [0, 0]);
     this.player1.gameboard.placeShip(this.player1.ships[1], [2, 2]);
