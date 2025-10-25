@@ -104,6 +104,21 @@ class controller {
     let area = document.getElementById(player + "Ships");
     area.textContent = "";
 
+    let rotate = document.createElement("button");
+    if (!this[player].ships.includes(this[player].currentShip)) {
+      rotate.textContent = "Rotation: Not selected";
+    } else {
+      rotate.textContent = `Rotation: ${this[player].currentShip.orintation}`;
+      rotate.addEventListener("click", () => {
+        this[player].currentShip.changeOrintation();
+        rotate.textContent = `Rotation: ${this[player].currentShip.orintation}`;
+      });
+    }
+
+    rotate.id = "rotate";
+
+    area.appendChild(rotate);
+    let ships = document.createElement("div");
     for (let i of this[player].ships) {
       if (!this[player].placeShips.includes(i)) {
         let element = document.createElement("button");
@@ -111,10 +126,11 @@ class controller {
         element.classList.add("text");
         element.addEventListener("click", () => {
           this[player].currentShip = i;
-          this[player].placeShips.push(i);
+          this.shipLocation(player);
         });
-        area.appendChild(element);
+        ships.appendChild(element);
       }
+      area.appendChild(ships);
     }
   }
   settings() {
@@ -191,18 +207,25 @@ class controller {
             this.removeHighlight(location);
           });
           div.addEventListener("click", () => {
-            let valid = this[player].gameboard.placeShip(
-              this[player].currentShip,
-              [j, i]
-            );
-            if (
-              valid == "Out of bounce on Y-axis" ||
-              valid == "Out of bounce on X-axis"
-            ) {
-              alert("Out of bounce on Y-axis");
-            } else {
-              this.newBoard(player);
-              this.shipLocation(player);
+            if (this[player].ships.includes(this[player].currentShip)) {
+              let valid = this[player].gameboard.placeShip(
+                this[player].currentShip,
+                [j, i]
+              );
+              if (
+                valid == "Out of bounce on Y-axis" ||
+                valid == "Out of bounce on X-axis"
+              ) {
+                alert("Out of bounce on Y-axis");
+              } else if (valid == "Already Placed") {
+                alert("cant overlap");
+              } else {
+                this[player].placeShips.push(this[player].currentShip);
+
+                this[player].currentShip = null;
+                this.newBoard(player);
+                this.shipLocation(player);
+              }
             }
           });
           gameboard.appendChild(div);
@@ -225,14 +248,4 @@ class controller {
 }
 let game = new controller();
 
-//create a form , maybe dropdonw
-//click and place
-// so have bank list of buttons with values of ships, and have it palce and then update both ship info and board
-//add a hover for the gird,
-//this grid will be different since not taking input, you will be placing ships
-
-//so dropdown will show list of names, and cordinate you want it to start, and vertical or horizitaln,
-//you will use these to plug into player1.gameboard.placeship, and if returns good then remove ship from list,
-//same thing for right side
-//  once created this, will come back to the ui of the game, which will consiss tof chanign the colors of the shps hit and sunked, as well as the misses,
-//maybe add blue background and a emogijo of an explosin for missed,
+//add a rotaiton , if roraiotn pressed roated it

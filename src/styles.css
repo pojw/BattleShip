@@ -41,7 +41,11 @@ body {
 #player2Ships {
   border: 2px black solid;
   height: 10vh;
+  grid-template-rows: 50% 50%;
+}
+#rotate {
   display: flex;
+  justify-self: flex-end;
 }
 .hidden {
   display: none;

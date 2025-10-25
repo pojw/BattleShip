@@ -50,24 +50,33 @@ export class GameBoard {
       }
       this.ships.push(name);
       this.addNozone(name.noZone);
+      console.log(this.cantPlace);
+      console.log(name.noZone);
 
       return this.board[start[1]];
     } else {
+      if (!this.checkPlace(name, start)) {
+        return "Already Placed";
+      }
       if (start[1] + name.length > 10) return "Out of bounce on Y-axis";
       for (let i = start[1]; i < 5 + start[1]; i++) {
         this.board[i][start[0]] = "ship";
         name.hits[hit] = [start[0], i];
-        name.space([i, start[1]]);
+        name.space([start[0], i]);
 
         hit += 1;
       }
       this.ships.push(name);
       this.addNozone(name.noZone);
+      console.log(name.noZone);
+      console.log(this.cantPlace);
+      console.log("f");
       return this.board;
     }
   }
   addNozone(points) {
     for (let point of points) {
+      console.log(point);
       this.cantPlace.add(point);
     }
   }
